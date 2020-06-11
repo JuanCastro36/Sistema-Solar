@@ -1,1 +1,118 @@
+%matplotlib inline
+#Importamos HTML para convertir la animación en un vídeo que se pueda guardar
+from IPython.display import HTML
+import scipy as sci
+import numpy as num
+import matplotlib
+import matplotlib.pyplot as plt
+from matplotlib import animation
+from mpl_toolkits.mplot3d import Axes3D
+#----------------------------------------------------------------------------------------------
+G=6.67408e-11 #N-m2/kg2
+
+m_ref=1.989e+30 #kg
+r_ref=1.49e+11 #m
+v_ref=30000 #m/s
+t_ref=365*24*3600*0.016 #s
+
+#Constantes Netas
+
+K1=G*t_ref*m_ref/(r_ref**2*v_ref)
+K2=v_ref*t_ref/r_ref
+print(K1,K2)
+
+#Masas en unidades solares
+m1=1.0 #Sol
+m2=3.0e-6 #Tierra
+m3=318*m2 #Jupiter
+
+#----------------------------------------------------------------------------------------------
+#Posiciones iniciales
+
+r1=[0,-0.6,0] #m
+r2=[0,0.4,0] #m
+r3=[0,2.1,0] #m
+
+#Convertimos posiciones en arreglos
+
+r1=num.array(r1,dtype="float64")
+r2=num.array(r2,dtype="float64")
+r3=num.array(r3,dtype="float64")
+
+#Centro de masas
+
+r_cm=(m1*r1+m2*r2+m3*r3)/(m1+m2+m3)
+
+#-----------------------------------------------------------------------------------------------
+
+#Velocidades iniciales
+
+v1=[0,0,0] #m/s
+v2=[-0.5,0.1,0] #m/s
+v3=[0.6,-0.2,0] #m/s
+
+#Velocidad en arreglos
+
+v1=num.array(v1,dtype="float64")
+v2=num.array(v2,dtype="float64")
+v3=num.array(v3,dtype="float64")
+
+#Velocidad CM
+
+v_cm=(m1*v1+m2*v2+m3*v3)/(m1+m2+m3)
+
+#---------------------------------------------------------------------------------------------------
+
+def Ecuaciones3C(a,t,G,m1,m2):
+    #Establece las posiciones de las variables en el arreglo "a"
+    r1=a[:3]
+    r2=a[3:6]
+    r3=a[6:9]
+    v1=a[9:12]
+    v2=a[12:15]
+    v3=a[15:18]
+    
+    #Distancias entre posiciones r_i
+    r12=sci.linalg.norm(r2-r1)
+    r13=sci.linalg.norm(r3-r1)
+    r23=sci.linalg.norm(r3-r2)
+    
+    #Ecuaciones de movimiento
+    dv1dt=K1*m2*(r2-r1)/r12**3+K1*m3*(r3-r1)/r13**3
+    dv2dt=K1*m1*(r1-r2)/r12**3+K1*m3*(r3-r2)/r23**3
+    dv3dt=K1*m1*(r1-r3)/r13**3+K1*m2*(r2-r3)/r23**3
+    dr1dt=K2*v1
+    dr2dt=K2*v2
+    dr3dt=K2*v3
+    
+    #Introducimos las derivadas en el arreglo final de 18 entradas
+    r12_dv=num.concatenate((dr1dt,dr2dt))
+    r_dv=num.concatenate((r12_dv,dr3dt))
+    v12_dv=num.concatenate((dv1dt,dv2dt))
+    v_dv=num.concatenate((v12_dv,dv3dt))
+    dv=num.concatenate((r_dv,v_dv))
+    return dv
+
+#-------------------------------------------------------------------------------------------
+
+#Parámetros iniciales en el arreglo
+prms_ini=num.array([r1,r2,r3,v1,v2,v3]) #Introduce los parámetros iniciales en el arreglo de 18 entradas
+prms_ini=prms_ini.flatten() #Convertimos el arreglo en una dimensión
+int_t=num.linspace(0,1000,1000) #Intervalo de tiempo de solución de la ecuación
+
+#Importamos la solución de la ecuación
+import scipy.integrate
+sol_Ecuaciones3C=sci.integrate.odeint(Ecuaciones3C,prms_ini,int_t,args=(G,m1,m2))
+
+#--------------------------------------------------------------------------------------------
+sol_r1=sol_Ecuaciones3C[:,:3]
+sol_r2=sol_Ecuaciones3C[:,3:6]
+sol_r3=sol_Ecuaciones3C[:,6:9]
+
+sol_rcm=(m1*sol_r1+m2*sol_r2+m3*sol_r3)/(m1+m2+m3)
+
+sol_r1cm=sol_r1-sol_rcm
+sol_r2cm=sol_r2-sol_rcm
+sol_r3cm=sol_r3-sol_rcm
+
 
