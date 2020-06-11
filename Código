@@ -183,5 +183,3 @@ anim=animation.FuncAnimation(fig,Animar,interval=40,repeat=False,blit=False,farg
 matplotlib.rcParams['animation.embed_limit'] = 2**128 #Increase animation embed limit
 HTML(anim.to_jshtml()) #Convertimos la animacion a jsanimation para que nos muestre los botones y la animacion
 
-#Podemos usar este comando para guardar un video de la animacion
-#anim.save("Problema3C.mp4")
