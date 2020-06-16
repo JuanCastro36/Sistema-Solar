@@ -10,7 +10,7 @@ from mpl_toolkits.mplot3d import Axes3D
 #----------------------------------------------------------------------------------------------
 G=6.67408e-11 #N-m2/kg2
 
-m_ref=1.989e+30 #kg
+m_ref=5.97e+24 #kg
 r_ref=1.49e+11 #m
 v_ref=30000 #m/s
 t_ref=365*24*3600*0.016 #s
@@ -21,115 +21,159 @@ K1=G*t_ref*m_ref/(r_ref**2*v_ref)
 K2=v_ref*t_ref/r_ref
 print(K1,K2)
 
-#Masas en unidades solares
-m1=1.0 #Sol
-m2=3.0e-6 #Tierra
-m3=318*m2 #Jupiter
+#Masas con respecto a la Tierra
+m3=3.0e-6 #Tierra
+m0=332946*m3 #Sol
+m1=0.05*m3 #Mercurio
+m2=0.815*m3  #Venus
+m4=0.107m3  #Marte
+m5=318*m3 #Jupiter
+m6=95*m3  #Saturno
+m7=14*m3  #Urano
+m8=17*m3  #Neptuno
 
 #----------------------------------------------------------------------------------------------
 #Posiciones iniciales
 
-r1=[0,-0.6,0] #m
-r2=[0,0.4,0] #m
-r3=[0,2.1,0] #m
+r0=[0,0,0]
+r1=[0,-0.6,0]
+r2=[0,0.4,0]
+r3=[0,2.1,0]
+r4=[0,0,0]
+r5=[0,0,0]
+r6=[0,0,0]
+r7=[0,0,0]
+r8=[0,0,0]
 
 #Convertimos posiciones en arreglos
 
+r0=num.array(r0,dtype="float64")
 r1=num.array(r1,dtype="float64")
 r2=num.array(r2,dtype="float64")
 r3=num.array(r3,dtype="float64")
+r4=num.array(r4,dtype="float64")
+r5=num.array(r5,dtype="float64")
+r6=num.array(r6,dtype="float64")
+r7=num.array(r7,dtype="float64")
+r8=num.array(r8,dtype="float64")
 
 #Centro de masas
 
-r_cm=(m1*r1+m2*r2+m3*r3)/(m1+m2+m3)
+r_cm1=(m0*r0+m1*r1+m2*r3)/(m0+m1+m2)
+r_cm2=(m0*r0+m2*r2+m5*r5)/(m0+m2+m5)
+r_cm3=(m0*r0+m3*r3+m5*r5)/(m0+m3+m5)
+r_cm4=(m0*r0+m4*r4+m5*r5)/(m0+m4+m5)
+r_cm5=(m0*r0+m5*r5+m6*r6)/(m0+m5+m6)
+r_cm6=(m0*r0+m6*r6+m5*r5)/(m0+m6+m5)
+r_cm7=(m0*r0+m7*r7+m5*r5)/(m0+m7+m5)
+r_cm8=(m0*r0+m8*r8+m5*r5)/(m0+m8+m5)
 
 #-----------------------------------------------------------------------------------------------
 
 #Velocidades iniciales
 
-v1=[0,0,0] #m/s
-v2=[-0.5,0.1,0] #m/s
-v3=[0.6,-0.2,0] #m/s
+v0=[0,0,0] #m/s
+v1=[-0.5,0.1,0] #km/s
+v2=[0.6,-0.2,0] #km/s
+v3=[0,0,0] #km/s
+v4=[0,0,0] #km/s
+v5=[0,0,0] #km/s
+v6=[0,0,0] #km/s
+v7=[0,0,0] #km/s
+v8=[0,0,0] #km/s
 
 #Velocidad en arreglos
 
+v0=num.array(v0,dtype="float64")
 v1=num.array(v1,dtype="float64")
 v2=num.array(v2,dtype="float64")
 v3=num.array(v3,dtype="float64")
+v4=num.array(v4,dtype="float64")
+v5=num.array(v5,dtype="float64")
+v6=num.array(v6,dtype="float64")
+v7=num.array(v7,dtype="float64")
+v8=num.array(v8,dtype="float64")
 
 #Velocidad CM
 
-v_cm=(m1*v1+m2*v2+m3*v3)/(m1+m2+m3)
+v_cm1=(m0*v0+m1*v1+m5*v5)/(m0+m1+m5)
+v_cm2=(m0*v0+m2*v2+m5*v5)/(m0+m2+m5)
+v_cm3=(m0*v0+m3*v3+m5*v5)/(m0+m3+m5)
+v_cm4=(m0*v0+m4*v4+m5*v5)/(m0+m4+m5)
+v_cm5=(m0*v0+m5*v5+m6*v6)/(m0+m5+m6)
+v_cm6=(m0*v0+m6*v6+m5*v5)/(m0+m6+m5)
+v_cm7=(m0*v0+m7*v7+m5*v5)/(m0+m7+m5)
+v_cm8=(m0*v0+m8*v8+m5*v5)/(m0+m8+m5)
 
 #---------------------------------------------------------------------------------------------------
 
-def Ecuaciones3C(a,t,G,m1,m2):
+def EcuacionMercurio(a,t,G,m0,m1):
     #Establece las posiciones de las variables en el arreglo "a"
-    r1=a[:3]
-    r2=a[3:6]
-    r3=a[6:9]
-    v1=a[9:12]
-    v2=a[12:15]
-    v3=a[15:18]
+    r0=a[:3]
+    r1=a[3:6]
+    r5=a[6:9]
+    v0=a[9:12]
+    v1=a[12:15]
+    v5=a[15:18]
     
     #Distancias entre posiciones r_i
-    r12=sci.linalg.norm(r2-r1)
-    r13=sci.linalg.norm(r3-r1)
-    r23=sci.linalg.norm(r3-r2)
+    r01=sci.linalg.norm(r1-r0)
+    r05=sci.linalg.norm(r5-r0)
+    r15=sci.linalg.norm(r5-r1)
     
     #Ecuaciones de movimiento
-    dv1dt=K1*m2*(r2-r1)/r12**3+K1*m3*(r3-r1)/r13**3
-    dv2dt=K1*m1*(r1-r2)/r12**3+K1*m3*(r3-r2)/r23**3
-    dv3dt=K1*m1*(r1-r3)/r13**3+K1*m2*(r2-r3)/r23**3
+    dv0dt=K1*m0*(r0-r1)/r01**3+K1*m0*(r0-r5)/r05**3
+    dv1dt=K1*m1*(r1-r0)/r01**3+K1*m3*(r1-r5)/r15**3
+    dv5dt=K1*m1*(r5-r0)/r05**3+K1*m2*(r5-r1)/r15**3
+    dr0dt=K2*v0
     dr1dt=K2*v1
-    dr2dt=K2*v2
-    dr3dt=K2*v3
+    dr5dt=K2*v5
     
     #Introducimos las derivadas en el arreglo final de 18 entradas
-    r12_dv=num.concatenate((dr1dt,dr2dt))
-    r_dv=num.concatenate((r12_dv,dr3dt))
-    v12_dv=num.concatenate((dv1dt,dv2dt))
-    v_dv=num.concatenate((v12_dv,dv3dt))
-    dv=num.concatenate((r_dv,v_dv))
+    r1_dv=num.concatenate((dr0dt,dr1dt))
+    r1_dv=num.concatenate((r01_dv,dr5dt))
+    v2_dv=num.concatenate((dv0dt,dv5dt))
+    v2_dv=num.concatenate((v2_dv,dv5dt))
+    dv=num.concatenate((r1_dv,v1_dv))
     return dv
 
 #-------------------------------------------------------------------------------------------
 
 #Parámetros iniciales en el arreglo
-prms_ini=num.array([r1,r2,r3,v1,v2,v3]) #Introduce los parámetros iniciales en el arreglo de 18 entradas
-prms_ini=prms_ini.flatten() #Convertimos el arreglo en una dimensión
-int_t=num.linspace(0,1000,1000) #Intervalo de tiempo de solución de la ecuación
+prms_ini1=num.array([r0,r1,r5,v0,v1,v5]) #Introduce los parámetros iniciales en el arreglo de 18 entradas
+prms_ini1=prms_ini1.flatten() #Convertimos el arreglo en una dimensión
+int_t1=num.linspace(0,1000,1000) #Intervalo de tiempo de solución de la ecuación
 
 #Importamos la solución de la ecuación
 import scipy.integrate
-sol_Ecuaciones3C=sci.integrate.odeint(Ecuaciones3C,prms_ini,int_t,args=(G,m1,m2))
+sol_EcuacionMercurio=sci.integrate.odeint(EcuacionMercurio,prms_ini1,int_t1,args=(G,m0,m1))
 
 #--------------------------------------------------------------------------------------------
-sol_r1=sol_Ecuaciones3C[:,:3]
-sol_r2=sol_Ecuaciones3C[:,3:6]
-sol_r3=sol_Ecuaciones3C[:,6:9]
+sol_r0=sol_EcuacioneMercurio[:,:3]
+sol_r1=sol_EcuacionMercurio[:,3:6]
+sol_r5=sol_EcuacionMercurio[:,6:9]
 
-sol_rcm=(m1*sol_r1+m2*sol_r2+m3*sol_r3)/(m1+m2+m3)
+sol_rcm1=(m0*sol_r0+m1*sol_r1+m5*sol_r5)/(m0+m1+m5)
 
-sol_r1cm=sol_r1-sol_rcm
-sol_r2cm=sol_r2-sol_rcm
-sol_r3cm=sol_r3-sol_rcm
+sol_r0cm0=sol_r0-sol_rcm1
+sol_r1cm1=sol_r1-sol_rcm1
+sol_r5cm5=sol_r5-sol_rcm1
 
 
 #-------------------------------------------------------------------------------------------------
 
 fig=plt.figure(figsize=(15,15))
 ax=fig.add_subplot(111,projection="3d")
-ax.plot(sol_r1cm[:,0],sol_r1cm[:,1],sol_r1cm[:,2],color="orangered")
-ax.plot(sol_r2cm[:,0],sol_r2cm[:,1],sol_r2cm[:,2],color="darkblue")
-ax.plot(sol_r3cm[:,0],sol_r3cm[:,1],sol_r3cm[:,2],color="darkred")
-ax.scatter(sol_r1cm[-1,0],sol_r1cm[-1,1]+0.4,sol_r1cm[-1,2],color="orange",marker="o",s=600,label="Sol")
-ax.scatter(sol_r2cm[-1,0],sol_r2cm[-1,1],sol_r2cm[-1,2],color="darkblue",marker="o",s=100,label="Tierra")
-ax.scatter(sol_r3cm[-1,0],sol_r3cm[-1,1],sol_r3cm[-1,2],color="darkred",marker="o",s=300,label="Jupiter")
+ax.plot(sol_r0cm0[:,0],sol_r1cm1[:,1],sol_r5cm5[:,2],color="orangered")
+ax.plot(sol_r0cm0[:,0],sol_r1cm1[:,1],sol_r5cm5[:,2],color="darkgrey")
+ax.plot(sol_r0cm0[:,0],sol_r1cm1[:,1],sol_r5cm5[:,2],color="burlywood")
+ax.scatter(sol_r0cm0[-1,0],sol_r0cm0[-1,1]+0.4,sol_r0cm0[-1,2],color="orangered",marker="o",s=600,label="Sol")
+ax.scatter(sol_r1cm1[-1,0],sol_r1cm1[-1,1],sol_r1cm1[-1,2],color="darkgrey",marker="o",s=1,label="Mercury")
+ax.scatter(sol_r5cm5[-1,0],sol_r5cm5[-1,1],sol_r5cm5[-1,2],color="burlywood",marker="o",s=100,label="Jupiter")
 ax.set_xlabel("coordenada-x",fontsize=14)
 ax.set_ylabel("coordenada-y",fontsize=14)
 ax.set_zlabel("coordenada-z",fontsize=14)
-ax.set_title("Problema de tres cuerpos Tierra-Jupiter-Sol\n",fontsize=14)
+ax.set_title("Problema de tres cuerpos Sol-Mercurio-Jupiter\n",fontsize=14)
 ax.legend(loc="upper left",fontsize=14)
 
 #--------------------------------------------------------------------------------------------
@@ -144,41 +188,41 @@ ax=fig.add_subplot(111,projection="3d",fc='black')
 #la flexibilidad para reducir el numero de puntos en la
 #animación para que en caso de que se ponga lenta, seleccione cada cuarto punto
 
-anim_sol_r1=sol_r1cm[::4,:].copy()
-anim_sol_r2=sol_r2cm[::4,:].copy()
-anim_sol_r3=sol_r3cm[::4,:].copy()
+anim_sol_r0=sol_r0cm0[::4,:].copy()
+anim_sol_r1=sol_r1cm1[::4,:].copy()
+anim_sol_r5=sol_r5cm5[::4,:].copy()
 
 #Establecemos la grafica inicial para los planetas en sus posiciones iniciales
-traza1=[ax.scatter(anim_sol_r1[0,0],anim_sol_r1[0,1],anim_sol_r1[0,2],color="orangered",marker="o",s=600)]
-traza2=[ax.scatter(anim_sol_r2[0,0],anim_sol_r2[0,1],anim_sol_r2[0,2],color="darkblue",marker="o",s=100)]
-traza3=[ax.scatter(anim_sol_r3[0,0],anim_sol_r3[0,1],anim_sol_r3[0,2],color="darkred",marker="o",s=300)]
+traza01=[ax.scatter(anim_sol_r0[0,0],anim_sol_r0[0,1],anim_sol_r0[0,2],color="orangered",marker="o",s=600)]
+traza11=[ax.scatter(anim_sol_r1[0,0],anim_sol_r1[0,1],anim_sol_r1[0,2],color="darkgrey",marker="o",s=1)]
+traza51=[ax.scatter(anim_sol_r5[0,0],anim_sol_r5[0,1],anim_sol_r5[0,2],color="burlywood",marker="o",s=100)]
 
 #Creamos la función Animacion que cambia la grafica cada frame i
-def Animar(i,traza1,traza2,traza3):
+def Animar(i,traza01,traza11,traza51):
     #Removemos 
-    traza1[0].remove()
-    traza2[0].remove()
-    traza3[0].remove()
+    traza01[0].remove()
+    traza11[0].remove()
+    traza51[0].remove()
     
     #Graficamos las orbitas desde la posición inicial a la actual
-    orbita1=ax.plot(anim_sol_r1[:i,0],anim_sol_r1[:i,1],anim_sol_r1[:i,2],color="orangered")
-    orbita2=ax.plot(anim_sol_r2[:i,0],anim_sol_r2[:i,1],anim_sol_r2[:i,2],color="darkblue")
-    orbita3=ax.plot(anim_sol_r3[:i,0],anim_sol_r3[:i,1],anim_sol_r3[:i,2],color="darkred")
+    orbita01=ax.plot(anim_sol_r0[:i,0],anim_sol_r0[:i,1],anim_sol_r0[:i,2],color="orangered")
+    orbita11=ax.plot(anim_sol_r1[:i,0],anim_sol_r1[:i,1],anim_sol_r1[:i,2],color="darkgrey")
+    orbita51=ax.plot(anim_sol_r5[:i,0],anim_sol_r5[:i,1],anim_sol_r5[:i,2],color="burlywood")
     
     #Grafica los planetitas
-    traza1[0]=ax.scatter(anim_sol_r1[i-1,0],anim_sol_r1[i-1,1]+0.4,anim_sol_r1[i-1,2],color="orangered",marker="o",s=600)
-    traza2[0]=ax.scatter(anim_sol_r2[i-1,0],anim_sol_r2[i-1,1],anim_sol_r2[i-1,2],color="darkblue",marker="o",s=100)
-    traza3[0]=ax.scatter(anim_sol_r3[i-1,0],anim_sol_r3[i-1,1],anim_sol_r3[i-1,2],color="darkred",marker="o",s=300)
-    return orbita1,orbita2,orbita3,traza1,traza2,traza3
+    traza01[0]=ax.scatter(anim_sol_r0[i-1,0],anim_sol_r0[i-1,1]+0.4,anim_sol_r10[i-1,2],color="orangered",marker="o",s=600)
+    traza11[0]=ax.scatter(anim_sol_r1[i-1,0],anim_sol_r1[i-1,1],anim_sol_r1[i-1,2],color="darkgrey",marker="o",s=1)
+    traza51[0]=ax.scatter(anim_sol_r5[i-1,0],anim_sol_r5[i-1,1],anim_sol_r5[i-1,2],color="burlywood",marker="o",s=100)
+    return orbita01,orbita11,orbita51,traza01,traza11,traza51
 
 #Marcacion ejes
 ax.set_xlabel("coordenada-x",fontsize=14)
 ax.set_ylabel("coodenada-y",fontsize=14)
 ax.set_zlabel("coordenada-z",fontsize=14)
-ax.set_title("Problema de tres cuerpos Tierra-Jupiter-Sol\n",fontsize=14)
+ax.set_title("Problema de tres cuerpos Sol-Mercurio-Jupiter\n",fontsize=14)
 
 #Usamos la funcion FuncAnimation para realizar la animacion
-anim=animation.FuncAnimation(fig,Animar,interval=40,repeat=False,blit=False,fargs=(traza1,traza2,traza3))
+anim=animation.FuncAnimation(fig,Animar,interval=40,repeat=False,blit=False,fargs=(traza01,traza11,traza51))
 
 matplotlib.rcParams['animation.embed_limit'] = 2**128 #Increase animation embed limit
 HTML(anim.to_jshtml()) #Convertimos la animacion a jsanimation para que nos muestre los botones y la animacion
