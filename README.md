@@ -28,7 +28,7 @@ Para finalizar, configuramos ciertos detalles referentes a la presentación de l
 
 ## Resultados
 
-![](AJup.mp4)
+![Animación de Mercurio a Júpiter](Problema3C1250.mp4)
 
 ## Autores
 
