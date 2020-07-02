@@ -28,7 +28,7 @@ Para finalizar, configuramos ciertos detalles referentes a la presentación de l
 
 ## Resultados
 
-![Animación de Mercurio a Júpiter](AMaJ.png)
+![Animación de Mercurio a Júpiter](AMaJ.PNG)
 
 ## Autores
 
