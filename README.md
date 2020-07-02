@@ -50,7 +50,6 @@ Para la m_2
 dv_2/dt = G*m_1*(r_1-r_2)/r_12**3
 ```
 
-
 ## Resumen del código
 
 La primera parte del código consiste en importar las librerías y funciones necesarias para el código, como matplotlib para las gráficas, scipy para solucionar las ecuaciones diferenciales de movimiento y HTML para las animaciones. Después asignamos las constantes físicas necesarias para las ecuaciones como la constante de la gravitación universal G y valores de referencia como la masa del Sol, la velocidad orbital de la Tierra respecto al Sol, el período de la órbita de la Tierra alrededor del Sol y la distancia media de la Tierra al Sol en m, para después utilizar por comodidad las unidades astronómicas UA.
@@ -62,6 +61,14 @@ A continuación ingresamos las distancias entre cuerpos e introducimos las ecuac
 Para la tercera parte del código, definimos la animación y la graficación de las soluciones expresadas en la segunda parte. Usamos plot y scatter para obtener las gráficas de los planetas y sus órbitas, e introducimos los valores para el color y el tamaño de los planetas. En esta sección también creamos la función Animar en la que se añaden comandos para alivianar la carga de procesamiento de la animación y los cálculos. Con las variables orbita y traza definimos los valores necesarios en cada punto que se anime.
 
 Para finalizar, configuramos ciertos detalles referentes a la presentación de la animación y las gráficas. Por gusto, eliminamos la marcación de los ejes y las mallas y adicionalmente, dejamos el fondo completamente negro para dar la impresión del espacio. Ya para ultimar, usamos FuncAnimation para generar la animación haciendo uso de los parámetros definidos en la función Animar y escogiendo la cantidad de frames a animar y con ayuda de HTMl, generamos una animación que nos brinda la posibilidada de pausar, adelantar o retroceder y se incluye anim.save para guardar un vídeo mp4 con el contenido de la animación.
+
+## Resultados
+
+## Autores
+
+Juan Pablo Castro Rodríguez
+
+Luis Felipe De La Ossa Mayorga
 
 ## Licencia
 
