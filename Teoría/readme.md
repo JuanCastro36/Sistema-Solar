@@ -4,13 +4,21 @@ Esta ley nos dice que la aceleración de un cuerpo es proporcional a la fuerza q
 
 ![](1.PNG)
 
+Para varias fuerzas, la Segunda Ley de Newton obedece el principio de superposición de los vectores
+
+![](8.PNG)
+
+Para nuestro caso
+
+![](9.PNG)
+
 # Ley de la Gravitación Universal
 
 Expresa que dos cuerpos presentan una atracción proporcional al producto de sus masas (m_1 e m_2)e inversamente proporcional al cuadrado de la distancia (euclidiana) que los separa (r_12). La constante de proporcionalidad que relaciona la fuerza de atracción con las masas y el inverso de su distancia, es la conocida como constante de la gravitación universal G. La ecuación tiene la siguiente forma:
 
 ![](2.PNG)
 
-La expresión anterior solo tiene en cuenta la magnitud, para volverlo un vector se usa la definición de vector unitario:
+# Desarrollo
 
 ![](3.PNG)
 ![](4.PNG)
@@ -26,3 +34,11 @@ Dividiendo por la m_1
 Para la m_2
 
 ![](7.PNG)
+
+Pero como en nuestro caso lo estamos haciendo con la fuerza de dos cuerpos, usando la superposición de la Segunda Ley de Newton.
+
+![](11.PNG)
+
+En general
+
+![](10.PNG)
