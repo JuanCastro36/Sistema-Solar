@@ -2,6 +2,8 @@
 
 El propósito del proyecto es realizar una animación del sistema solar por medio de aproximaciones numéricas que nos permiten hacer uso del problema de los tres cuerpos, así que solo se tienen en cuenta las interacciones con los 2 cuerpos más masivos del sistema solar disponibles (Sol y Júpiter o Saturno) y aproximar así el movimiento de los 8 planetas del sistema solar con respecto al Sol. Esto se logra haciendo uso de la Ley de la Gravitación Universal de Newton para cada cuerpo presente en la interacción y usando la herramienta scipy.integrate.odeint para resolver las ecuaciones diferenciales ordinarias de movimiento acopladas con sus respectivas condiciones iniciales
 
+![](AMaJ.PNG)
+
 ## Consideraciones
 
 Para hacer uso de este código, es necesario tener una versión de Matplotlib que permita hacer uso de la función anim.save en caso de que se quiera guardar la animación, ya que algunas versiones como la 3.1 no lo permiten. Además, el código está escrito para ejecutarse en la consola de Jupyter. El código como está escrito, anima una pequeña sección de vídeo para evitar tiempos elevados en la ejecución del programa. Queda a la disposición del usuario escoger la cantidad de frames a animar dependiendo de cuánto quiera observar en la animación y cuánto tiempo esté dispuesto a dejar corriendo el programa. De igual forma, por facillidad para el usuario, todos los pasos están comentados en el código para que el usuario entienda qué se hace con cada sección.
@@ -28,8 +30,10 @@ Para finalizar, configuramos ciertos detalles referentes a la presentación de l
 
 ## Resultados
 
-![Animación de Mercurio a Júpiter](AMaJ.PNG)
+Los resultados dependerán de qué tanto se quiera abarcar, un resultado que se puede obtener en poco tiempo de ejecución del código, es la simulación de Mercurio, Venus, Tierra, Marte y Júpiter como se ve en la animación a continuación. Hay que tener en cuenta que el código se puede editar para agregar más cuerpos si se quiere con sus posiciones y velocidades definidas, pero entre más se quiera agregar, mayor va a ser el tiempo de ejecución del programa.
+
 ![](Problema3C1250.gif)
+
 
 ## Autores
 
