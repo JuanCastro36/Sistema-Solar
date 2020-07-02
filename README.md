@@ -38,4 +38,4 @@ Para finalizar, configuramos ciertos detalles referentes a la presentación de l
 
 ## Licencia
 
-GNU General Public License V3.0
+[GNU General Public License V3.0](https://github.com/JuanCastro36/Sistema-Solar/blob/patch-1/LICENSE)
