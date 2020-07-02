@@ -8,11 +8,11 @@ Para hacer uso de este código, es necesario tener una versión de Matplotlib qu
 
 ## Instalación
 
-
+https://github.com/JuanCastro36/Sistema-Solar/blob/patch-1/Teor%C3%ADa 
 
 ## Física del código
 
-Sistema-Solar/Teoría
+
 
 ## Resumen del código
 
