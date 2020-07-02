@@ -8,11 +8,11 @@ Para hacer uso de este código, es necesario tener una versión de Matplotlib qu
 
 ## Instalación
 
-https://github.com/JuanCastro36/Sistema-Solar/blob/patch-1/Teor%C3%ADa 
+Descargar el archivo ASS.ipynb desde y correrlo en la consola de Jupyter Notebook
 
 ## Física del código
 
-
+[Teoría](https://github.com/JuanCastro36/Sistema-Solar/blob/patch-1/Teor%C3%ADa) 
 
 ## Resumen del código
 
@@ -30,9 +30,9 @@ Para finalizar, configuramos ciertos detalles referentes a la presentación de l
 
 ## Autores
 
-Juan Pablo Castro Rodríguez
+ * Juan Pablo Castro Rodríguez
 
-Luis Felipe De La Ossa Mayorga
+ * Luis Felipe De La Ossa Mayorga
 
 ## Licencia
 
