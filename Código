@@ -544,7 +544,7 @@ ax.set_zlabel("coordenada-z",fontsize=100)
 ax.set_title("Problema de tres cuerpos Tierra-Jupiter-Sol\n",fontsize=100)
 
 #Usamos la funcion FuncAnimation para realizar la animacion
-anim=animation.FuncAnimation(fig,Animar,frames=20000,interval=100,repeat=False,blit=False,fargs=(traza1,traza2,traza3,traza4,traza5,traza6,traza7,traza8,traza9))
+anim=animation.FuncAnimation(fig,Animar,frames=20000,interval=1000,repeat=False,blit=False,fargs=(traza1,traza2,traza3,traza4,traza5,traza6,traza7,traza8,traza9))
 
 matplotlib.rcParams['animation.embed_limit'] = 6**128 #Aumentamos el límite de la animación
 HTML(anim.to_jshtml()) #Convertimos la animacion a jsanimation para que nos muestre los botones y la animacion
