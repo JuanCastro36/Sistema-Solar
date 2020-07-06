@@ -351,6 +351,159 @@ def EcuacionesMarte(a,t,G,m1,m6):
     v_dv=num.concatenate((v16_dv,dv3dt))
     dv=num.concatenate((r_dv,v_dv))
     return dv
+    
+
+#JÚPITER Y SATURNO
+
+m7=2.845e-4  #Saturno
+r7=[0,8.94,0]
+r7=num.array(r7,dtype="float64")
+r_cm5=(m1*r1+m7*r7+m3*r3)/(m1+m7+m3)
+v7=[-0.16,0.03,0]
+v7=num.array(v7,dtype="float64")
+v_cm5=(m1*v1+m3*v3+m7*v7)/(m1+m3+m7)
+
+def EcuacionJupiter(a,t,G,m1,m3):
+    r1=a[:3]
+    r3=a[3:6]
+    r7=a[6:9]
+    
+    v1=a[9:12]
+    v3=a[12:15]
+    v7=a[15:18]
+    
+    r13=sci.linalg.norm(r3-r1)
+    r17=sci.linalg.norm(r7-r1)
+    r37=sci.linalg.norm(r7-r3)
+    
+    dv1dt=K1*m3*(r3-r1)/r13**3+K1*m7*(r7-r1)/r13**3
+    dv3dt=K1*m1*(r1-r3)/r13**3+K1*m7*(r7-r3)/r37**3
+    dv7dt=K1*m1*(r1-r7)/r17**3+K1*m3*(r3-r7)/r37**3
+    
+    dr1dt=K2*v1
+    dr3dt=K2*v3
+    dr7dt=K2*v7
+    
+    r13_dv=num.concatenate((dr1dt,dr3dt))
+    r_dv=num.concatenate((r13_dv,dr7dt))
+    v13_dv=num.concatenate((dv1dt,dv3dt))
+    v_dv=num.concatenate((v13_dv,dv7dt))
+    dv=num.concatenate((r_dv,v_dv))
+    return dv
+
+prms_ini5=num.array([r1,r3,r7,v1,v3,v7])
+prms_ini5=prms_ini5.flatten()
+int_t5=num.linspace(0,80,1000)
+
+sol_EcuacionJupiter=sci.integrate.odeint(EcuacionJupiter,prms_ini5,int_t5,args=(G,m1,m3))
+sol_r13=sol_EcuacionJupiter[:,:3]
+sol_r3=sol_EcuacionJupiter[:,3:6]
+sol_r73=sol_EcuacionJupiter[:,6:9]
+sol_rcm5=(m1*sol_r13+m3*sol_r3+m7*sol_r73)/(m1+m3+m7)
+sol_r1cm=sol_r13-sol_rcm5
+sol_r3cm=sol_r3-sol_rcm5
+sol_r7cm=sol_r73-sol_rcm5
+
+#---------------------------------------------------------------------------------------------------
+
+#URANO
+
+m8=4.34e-5  #Urano
+r8=[0,18.6,0]
+r8=num.array(r8,dtype="float64")
+r_cm6=(m1*r1+m8*r8+m3*r3)/(m1+m8+m3)
+v8=[-0.11,0.02,0]
+v8=num.array(v8,dtype="float64")
+v_cm6=(m1*v1+m8*v8+m3*v3)/(m1+m8+m3)
+
+def EcuacionUrano(a,t,G,m1,m8):
+    r1=a[:3]
+    r8=a[3:6]
+    r3=a[6:9]
+    
+    v1=a[9:12]
+    v8=a[12:15]
+    v3=a[15:18]
+    
+    r18=sci.linalg.norm(r8-r1)
+    r13=sci.linalg.norm(r3-r1)
+    r38=sci.linalg.norm(r8-r3)
+    
+    dv1dt=K1*m8*(r8-r1)/r18**3+K1*m3*(r3-r1)/r13**3
+    dv8dt=K1*m1*(r1-r8)/r18**3+K1*m3*(r3-r8)/r38**3
+    dv3dt=K1*m1*(r1-r3)/r13**3+K1*m8*(r8-r3)/r38**3
+    
+    dr1dt=K2*v1
+    dr8dt=K2*v8
+    dr3dt=K2*v3
+    
+    r18_dv=num.concatenate((dr1dt,dr8dt))
+    r_dv=num.concatenate((r18_dv,dr3dt))
+    v18_dv=num.concatenate((dv1dt,dv8dt))
+    v_dv=num.concatenate((v18_dv,dv3dt))
+    dv=num.concatenate((r_dv,v_dv))
+    return dv
+
+prms_ini7=num.array([r1,r8,r3,v1,v8,v3])
+prms_ini7=prms_ini7.flatten()
+int_t7=num.linspace(0,80,1000)
+sol_EcuacionUrano=sci.integrate.odeint(EcuacionUrano,prms_ini7,int_t7,args=(G,m1,m8))
+
+sol_r18=sol_EcuacionUrano[:,:3]
+sol_r8=sol_EcuacionUrano[:,3:6]
+sol_r38=sol_EcuacionUrano[:,6:9]
+sol_rcm7=(m1*sol_r18+m8*sol_r8+m3*sol_r38)/(m1+m8+m3)
+sol_r8cm=sol_r8-sol_rcm7
+
+#---------------------------------------------------------------------------------------------------
+
+#NEPTUNO
+
+m9=5.1e-5  #Neptuno
+r9=[0,29.4,0]
+r9=num.array(r9,dtype="float64")
+r_cm7=(m1*r1+m9*r9+m3*r3)/(m1+m9+m3)
+v9=[-0.09,0.02,0]
+v9=num.array(v9,dtype="float64")
+v_cm7=(m1*v1+m9*v9+m3*v3)/(m1+m9+m3)
+
+def EcuacionNeptuno(a,t,G,m1,m9):
+    r1=a[:3]
+    r9=a[3:6]
+    r3=a[6:9]
+    
+    v1=a[9:12]
+    v9=a[12:15]
+    v3=a[15:18]
+    
+    r19=sci.linalg.norm(r9-r1)
+    r13=sci.linalg.norm(r3-r1)
+    r39=sci.linalg.norm(r3-r9)
+    
+    dv1dt=K1*m9*(r9-r1)/r19**3+K1*m3*(r3-r1)/r13**3
+    dv9dt=K1*m1*(r1-r9)/r19**3+K1*m3*(r3-r9)/r39**3
+    dv3dt=K1*m1*(r1-r3)/r13**3+K1*m9*(r9-r3)/r39**3
+    
+    dr1dt=K2*v1
+    dr9dt=K2*v9
+    dr3dt=K2*v3
+    
+    r19_dv=num.concatenate((dr1dt,dr9dt))
+    r_dv=num.concatenate((r19_dv,dr3dt))
+    v19_dv=num.concatenate((dv1dt,dv9dt))
+    v_dv=num.concatenate((v19_dv,dv3dt))
+    dv=num.concatenate((r_dv,v_dv))
+    return dv
+
+prms_ini8=num.array([r1,r9,r3,v1,v9,v3])
+prms_ini8=prms_ini8.flatten()
+int_t8=num.linspace(0,80,1000)
+sol_EcuacionNeptuno=sci.integrate.odeint(EcuacionNeptuno,prms_ini8,int_t8,args=(G,m1,m9))
+sol_r19=sol_EcuacionNeptuno[:,:3]
+sol_r9=sol_EcuacionNeptuno[:,3:6]
+sol_r39=sol_EcuacionNeptuno[:,6:9]
+sol_rcm8=(m1*sol_r19+m9*sol_r9+m3*sol_r39)/(m1+m9+m3)
+sol_r9cm=sol_r9-sol_rcm8
 
 #-------------------------------------------------------------------------------------------
 
@@ -379,18 +532,27 @@ sol_r6cm=sol_r6-sol_rcm4
 
 fig=plt.figure(figsize=(15,15))
 ax=fig.add_subplot(111,projection="3d")
+
 ax.plot(sol_r1cm[:,0],sol_r1cm[:,1]+0.4,sol_r1cm[:,2],color="orangered")
 ax.plot(sol_r2cm[:,0],sol_r2cm[:,1],sol_r2cm[:,2],color="darkblue")
 ax.plot(sol_r4cm[:,0],sol_r4cm[:,1]+0.2,sol_r4cm[:,2],color="gray")
 ax.plot(sol_r5cm[:,0],sol_r5cm[:,1]+0.1,sol_r5cm[:,2],color="green")
 ax.plot(sol_r6cm[:,0],sol_r6cm[:,1]-0.25,sol_r6cm[:,2],color="darkred")
 ax.plot(sol_r3cm[:,0],sol_r3cm[:,1],sol_r3cm[:,2],color="tan")
+ax.plot(sol_r7cm[:,0],sol_r7cm[:,1]-2.6,sol_r7cm[:,2],color="peru")
+ax.plot(sol_r8cm[:,0],sol_r8cm[:,1]-5,sol_r8cm[:,2],color="mediumturquoise")
+ax.plot(sol_r9cm[:,0],sol_r9cm[:,1]-7.7,sol_r9cm[:,2],color="blue")
+
 ax.scatter(sol_r1cm[-1,0],sol_r1cm[-1,1]+0.4,sol_r1cm[-1,2],color="orange",marker="o",s=1000,label="Sol")
 ax.scatter(sol_r2cm[-1,0],sol_r2cm[-1,1],sol_r2cm[-1,2],color="darkblue",marker="o",s=150,label="Tierra")
 ax.scatter(sol_r4cm[-1,0],sol_r4cm[-1,1]+0.2,sol_r4cm[-1,2],color="gray",marker="o",s=60,label="Mercurio")
 ax.scatter(sol_r5cm[-1,0],sol_r5cm[-1,1]+0.1,sol_r5cm[-1,2],color="green",marker="o",s=100,label="Venus")
 ax.scatter(sol_r6cm[-1,0],sol_r6cm[-1,1]-0.25,sol_r6cm[-1,2],color="darkred",marker="o",s=80,label="Marte")
 ax.scatter(sol_r3cm[-1,0],sol_r3cm[-1,1],sol_r3cm[-1,2],color="tan",marker="o",s=400,label="Jupiter")
+ax.scatter(sol_r7cm[-1,0],sol_r7cm[-1,1]-2.6,sol_r7cm[-1,2],color="peru",marker="o",s=350,label="Saturno")
+ax.scatter(sol_r8cm[-1,0],sol_r8cm[-1,1]-5,sol_r8cm[-1,2],color="mediumturquoise",marker="o",s=200,label="Urano")
+ax.scatter(sol_r9cm[-1,0],sol_r9cm[-1,1]-7.7,sol_r9cm[-1,2],color="blue",marker="o",s=200,label="Neptuno")
+
 ax.set_xlabel("coordenada-x",fontsize=14)
 ax.set_ylabel("coordenada-y",fontsize=14)
 ax.set_zlabel("coordenada-z",fontsize=14)
@@ -408,12 +570,16 @@ ax=fig.add_subplot(111,projection="3d")
 #la flexibilidad para reducir el numero de puntos en la
 #animación para que en caso de que se ponga lenta, seleccione cada cuarto punto
 
-anim_sol_r1=sol_r1cm[::4,:].copy()
-anim_sol_r2=sol_r2cm[::4,:].copy()
-anim_sol_r4=sol_r4cm[::4,:].copy()
-anim_sol_r5=sol_r5cm[::4,:].copy()
-anim_sol_r6=sol_r6cm[::4,:].copy()
-anim_sol_r3=sol_r3cm[::4,:].copy()
+anim_sol_r1=sol_r1cm[::8,:].copy()
+anim_sol_r2=sol_r2cm[::8,:].copy()
+anim_sol_r4=sol_r4cm[::8,:].copy()
+anim_sol_r5=sol_r5cm[::8,:].copy()
+anim_sol_r6=sol_r6cm[::8,:].copy()
+anim_sol_r3=sol_r3cm[::8,:].copy()
+anim_sol_r7=sol_r7cm[::8,:].copy()
+anim_sol_r8=sol_r8cm[::8,:].copy()
+anim_sol_r9=sol_r9cm[::8,:].copy()
+
 
 #Establecemos la grafica inicial para los planetas en sus posiciones iniciales
 traza1=[ax.scatter(anim_sol_r1[0,0],anim_sol_r1[0,1]+0.4,anim_sol_r1[0,2],color="orangered",marker="o",s=1000)]
@@ -422,8 +588,13 @@ traza4=[ax.scatter(anim_sol_r4[0,0],anim_sol_r4[0,1],anim_sol_r4[0,2],color="gra
 traza5=[ax.scatter(anim_sol_r5[0,0],anim_sol_r5[0,1],anim_sol_r5[0,2],color="green",marker="o",s=100)]
 traza6=[ax.scatter(anim_sol_r6[0,0],anim_sol_r6[0,1],anim_sol_r6[0,2],color="darkred",marker="o",s=80)]
 traza3=[ax.scatter(anim_sol_r3[0,0],anim_sol_r3[0,1],anim_sol_r3[0,2],color="tan",marker="o",s=400)]
+traza7=[ax.scatter(anim_sol_r7[0,0],anim_sol_r7[0,1]-2.6,anim_sol_r7[0,2],color="peru",marker="o",s=350)]
+traza8=[ax.scatter(anim_sol_r8[0,0],anim_sol_r8[0,1]-5,anim_sol_r8[0,2],color="mediumturquoise",marker="o",s=200)]
+traza9=[ax.scatter(anim_sol_r9[0,0],anim_sol_r9[0,1]-7.7,anim_sol_r9[0,2],color="darkblue",marker="o",s=200)]
+
+
 #Creamos la función Animacion que cambia la grafica cada frame i
-def Animar(i,traza1,traza2,traza3,traza4,traza5,traza6):
+def Animar(i,traza1,traza2,traza3,traza4,traza5,traza6,traza7,traza8,traza9):
     #Removemos 
     traza1[0].remove()
     traza2[0].remove()
@@ -431,6 +602,9 @@ def Animar(i,traza1,traza2,traza3,traza4,traza5,traza6):
     traza5[0].remove()
     traza6[0].remove()
     traza3[0].remove()
+    traza7[0].remove()
+    traza8[0].remove()
+    traza9[0].remove()
     
     
     #Graficamos las orbitas desde la posición inicial a la actual
@@ -440,6 +614,9 @@ def Animar(i,traza1,traza2,traza3,traza4,traza5,traza6):
     orbita5=ax.plot(anim_sol_r5[:i,0],anim_sol_r5[:i,1]+0.1,anim_sol_r5[:i,2],color="green")
     orbita6=ax.plot(anim_sol_r6[:i,0],anim_sol_r6[:i,1]-0.25,anim_sol_r6[:i,2],color="darkred")
     orbita3=ax.plot(anim_sol_r3[:i,0],anim_sol_r3[:i,1],anim_sol_r3[:i,2],color="tan")
+    orbita7=ax.plot(anim_sol_r7[:i,0],anim_sol_r7[:i,1]-2.6,anim_sol_r7[:i,2],color="peru")
+    orbita8=ax.plot(anim_sol_r8[:i,0],anim_sol_r8[:i,1]-5,anim_sol_r8[:i,2],color="mediumturquoise")
+    orbita9=ax.plot(anim_sol_r9[:i,0],anim_sol_r9[:i,1]-7.7,anim_sol_r9[:i,2],color="blue")
     
     #Grafica los planetitas
     traza1[0]=ax.scatter(anim_sol_r1[i-1,0],anim_sol_r1[i-1,1]+0.4,anim_sol_r1[i-1,2],color="orangered",marker="o",s=1000)
@@ -448,7 +625,10 @@ def Animar(i,traza1,traza2,traza3,traza4,traza5,traza6):
     traza5[0]=ax.scatter(anim_sol_r5[i-1,0],anim_sol_r5[i-1,1]+0.1,anim_sol_r5[i-1,2],color="green",marker="o",s=100)
     traza6[0]=ax.scatter(anim_sol_r6[i-1,0],anim_sol_r6[i-1,1]-0.25,anim_sol_r6[i-1,2],color="darkred",marker="o",s=80)
     traza3[0]=ax.scatter(anim_sol_r3[i-1,0],anim_sol_r3[i-1,1],anim_sol_r3[i-1,2],color="tan",marker="o",s=400)
-    return orbita1,orbita2,orbita3,orbita4,orbita5,orbita6,traza1,traza2,traza3,traza4,traza5,traza6
+    traza7[0]=ax.scatter(anim_sol_r7[i-1,0],anim_sol_r7[i-1,1]-2.6,anim_sol_r7[i-1,2],color="peru",marker="o",s=350)
+    traza8[0]=ax.scatter(anim_sol_r8[i-1,0],anim_sol_r8[i-1,1]-5,anim_sol_r8[i-1,2],color="mediumturquoise",marker="o",s=200)
+    traza9[0]=ax.scatter(anim_sol_r9[i-1,0],anim_sol_r9[i-1,1]-7.7,anim_sol_r9[i-1,2],color="blue",marker="o",s=200)
+    return orbita1,orbita2,orbita3,orbita4,orbita5,orbita6,orbita7,orbita8,orbita9,traza1,traza2,traza3,traza4,traza5,traza6,traza7,traza8,traza9
 
 #Marcacion ejes
 fig.set_facecolor('black')
@@ -466,11 +646,11 @@ ax.set_zlabel("coordenada-z",fontsize=14)
 ax.set_title("Problema de tres cuerpos Tierra-Jupiter-Sol\n",fontsize=14)
 
 #Usamos la funcion FuncAnimation para realizar la animacion
-anim=animation.FuncAnimation(fig,Animar,frames=250,interval=40,repeat=False,blit=False,fargs=(traza1,traza2,traza3,traza4,traza5,traza6))
+anim=animation.FuncAnimation(fig,Animar,frames=20000,interval=100,repeat=False,blit=False,fargs=(traza1,traza2,traza3,traza4,traza5,traza6,traza7,traza8,traza9))
 
 matplotlib.rcParams['animation.embed_limit'] = 4**128 #Increase animation embed limit
 HTML(anim.to_jshtml()) #Convertimos la animacion a jsanimation para que nos muestre los botones y la animacion
 
 #Podemos usar este comando para guardar un video de la animacion
 
-#anim.save("Problema3C.mp4")
+anim.save("Animación_Sistema_Solar.mp4")
