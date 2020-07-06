@@ -72,7 +72,7 @@ v_cm=(m1*v1+m2*v2+m3*v3)/(m1+m2+m3)
 
 #ECUACIÓN
 
-def EcuacionesTierra(a,t,G,m1,m2):
+def EcuacionTierra(a,t,G,m1,m2):
     #Establece las posiciones de las variables en el arreglo "a"
     r1=a[:3]
     r2=a[3:6]
@@ -260,10 +260,10 @@ prms_ini4=num.array([r1,r6,r3,v1,v6,v3])
 prms_ini4=prms_ini4.flatten()
 int_t4=num.linspace(0,80,1000)
 
-sol_EcuacionesMarte=sci.integrate.odeint(EcuacionesMarte,prms_ini4,int_t4,args=(G,m1,m6))
-sol_r16=sol_EcuacionesMarte[:,:3]
-sol_r6=sol_EcuacionesMarte[:,3:6]
-sol_r63=sol_EcuacionesMarte[:,6:9]
+sol_EcuacionMarte=sci.integrate.odeint(EcuacionMarte,prms_ini4,int_t4,args=(G,m1,m6))
+sol_r16=sol_EcuacionMarte[:,:3]
+sol_r6=sol_EcuacionMarte[:,3:6]
+sol_r63=sol_EcuacionMarte[:,6:9]
 sol_rcm4=(m1*sol_r16+m6*sol_r6+m3*sol_r63)/(m1+m6+m3)
 sol_r6cm=sol_r6-sol_rcm4
 
@@ -479,15 +479,15 @@ anim_sol_r9=sol_r9cm[::8,:].copy()
 
 
 #Establecemos la grafica inicial para los planetas en sus posiciones iniciales
-traza1=[ax.scatter(anim_sol_r1[0,0],anim_sol_r1[0,1]+0.4,anim_sol_r1[0,2],color="orangered",marker="o",s=1000)]
-traza2=[ax.scatter(anim_sol_r2[0,0],anim_sol_r2[0,1],anim_sol_r2[0,2],color="darkblue",marker="o",s=150)]
-traza4=[ax.scatter(anim_sol_r4[0,0],anim_sol_r4[0,1],anim_sol_r4[0,2],color="gray",marker="o",s=60)]
-traza5=[ax.scatter(anim_sol_r5[0,0],anim_sol_r5[0,1],anim_sol_r5[0,2],color="green",marker="o",s=100)]
-traza6=[ax.scatter(anim_sol_r6[0,0],anim_sol_r6[0,1],anim_sol_r6[0,2],color="darkred",marker="o",s=80)]
-traza3=[ax.scatter(anim_sol_r3[0,0],anim_sol_r3[0,1],anim_sol_r3[0,2],color="tan",marker="o",s=400)]
-traza7=[ax.scatter(anim_sol_r7[0,0],anim_sol_r7[0,1]-2.6,anim_sol_r7[0,2],color="peru",marker="o",s=350)]
-traza8=[ax.scatter(anim_sol_r8[0,0],anim_sol_r8[0,1]-5,anim_sol_r8[0,2],color="mediumturquoise",marker="o",s=200)]
-traza9=[ax.scatter(anim_sol_r9[0,0],anim_sol_r9[0,1]-7.7,anim_sol_r9[0,2],color="darkblue",marker="o",s=200)]
+traza1=[ax.scatter(anim_sol_r1[0,0],anim_sol_r1[0,1]+0.4,anim_sol_r1[0,2],color="orangered",marker="o",s=5000)]
+traza2=[ax.scatter(anim_sol_r2[0,0],anim_sol_r2[0,1],anim_sol_r2[0,2],color="darkblue",marker="o",s=750)]
+traza4=[ax.scatter(anim_sol_r4[0,0],anim_sol_r4[0,1],anim_sol_r4[0,2],color="gray",marker="o",s=300)]
+traza5=[ax.scatter(anim_sol_r5[0,0],anim_sol_r5[0,1],anim_sol_r5[0,2],color="green",marker="o",s=500)]
+traza6=[ax.scatter(anim_sol_r6[0,0],anim_sol_r6[0,1],anim_sol_r6[0,2],color="darkred",marker="o",s=400)]
+traza3=[ax.scatter(anim_sol_r3[0,0],anim_sol_r3[0,1],anim_sol_r3[0,2],color="tan",marker="o",s=2000)]
+traza7=[ax.scatter(anim_sol_r7[0,0],anim_sol_r7[0,1]-2.6,anim_sol_r7[0,2],color="peru",marker="o",s=1750)]
+traza8=[ax.scatter(anim_sol_r8[0,0],anim_sol_r8[0,1]-5,anim_sol_r8[0,2],color="mediumturquoise",marker="o",s=1000)]
+traza9=[ax.scatter(anim_sol_r9[0,0],anim_sol_r9[0,1]-7.7,anim_sol_r9[0,2],color="darkblue",marker="o",s=1000)]
 
 
 #Creamos la función Animacion que cambia la grafica cada frame i
