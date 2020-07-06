@@ -452,7 +452,7 @@ ax.scatter(sol_r9cm[-1,0],sol_r9cm[-1,1]-7.7,sol_r9cm[-1,2],color="blue",marker=
 ax.set_xlabel("coordenada-x",fontsize=100)
 ax.set_ylabel("coordenada-y",fontsize=100)
 ax.set_zlabel("coordenada-z",fontsize=100)
-ax.set_title("Problema de tres cuerpos Tierra-Jupiter-Sol\n",fontsize=100)
+ax.set_title("Sistema Solar\n",fontsize=100)
 ax.legend(loc="upper left",fontsize=100)
 
 #--------------------------------------------------------------------------------------------
@@ -541,7 +541,7 @@ ax.w_zaxis.set_pane_color((0.0, 0.0, 0.0, 0.0))
 ax.set_xlabel("coordenada-x",fontsize=100)
 ax.set_ylabel("coodenada-y",fontsize=100)
 ax.set_zlabel("coordenada-z",fontsize=100)
-ax.set_title("Problema de tres cuerpos Tierra-Jupiter-Sol\n",fontsize=100)
+ax.set_title("Sistema Solar\n",fontsize=100)
 
 #Usamos la funcion FuncAnimation para realizar la animacion
 anim=animation.FuncAnimation(fig,Animar,frames=20000,interval=1000,repeat=False,blit=False,fargs=(traza1,traza2,traza3,traza4,traza5,traza6,traza7,traza8,traza9))
