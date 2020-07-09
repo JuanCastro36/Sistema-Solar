@@ -10,7 +10,7 @@ Para hacer uso de este código, es necesario tener una versión de Matplotlib qu
 
 ## Instalación
 
-Descargar el archivo ASS.ipynb desde y correrlo en la consola de Jupyter Notebook
+Descargar el archivo ASS.ipynb y correrlo en la consola de Jupyter Notebook. En caso de no poder hacer uso de la función anim.save, se puede descargar FFmpeg desde [acá](https://ffmpeg.zeranoe.com/builds/) o descargar una versión de matplotlib que no presente fallas con esa función (como la 3.0), tal como se indicó en las consideraciones.
 
 ## Física del código
 
