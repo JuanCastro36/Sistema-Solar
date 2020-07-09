@@ -45,12 +45,12 @@ En general
 
 ![](10.PNG)
 
-#Centro de masa
+# Centro de masa
 
 La posición para el centro de masa de un sistema de tres cuerpos con masas m_1, m_2 y m_3, se puede definir vectorialmente de la siguiente manera:
 
-![](captura1.PNG)
+![](Captura1.PNG)
 
 Tomando la derivada de la ecuación anterior, la velocidad del centro de masa se define como:
 
-![](captura2.PNG)
+![](Captura2.PNG)
