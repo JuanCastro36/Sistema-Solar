@@ -38,9 +38,9 @@ Adicional a la animación, obtendremos una gráfica con los ejes coordenados con
 
 ![](Captura.PNG)
 
-![](Animación_Sistema_Solar.gif)
-
 Estas simulaciones tienen las formas mostradas, debido a que entre más cuerpos lejanos se agreguen, los planetas más cercanos al Sol ya habrán girado muchas veces con órbitas que no son iguales. También cabe aclarar que entre más espacio se quiera abarcar, menos se van a ver los cuerpos y para propósitos de imagen, no es muy conveniente. Por eso se muestran imágenes de simulaciones sin todos los planetas del Sistema Solar.
+
+![](Animación_Sistema_Solar2.gif)
 
 
 ## Autores
