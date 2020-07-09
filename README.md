@@ -34,6 +34,12 @@ Los resultados dependerán de qué tanto se quiera abarcar, un resultado que se 
 
 ![](Problema3C1250.gif)
 
+Adicional a la animación, obtendremos una gráfica con los ejes coordenados con su respectiva leyenda y una imagen de la animación. A continuación se muestran ejemplos de ambas.
+
+![](Captura.PNG)
+
+![](Animación_Sistema_Solar.gif)
+
 
 ## Autores
 
